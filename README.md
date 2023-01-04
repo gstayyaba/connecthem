@@ -7,6 +7,7 @@ This project is done by Abdullah Qureshi, Muhammad Omer Irfan, Amna Irfan, and m
 ### How to run
 
 Create a new cluster in mongodb and connect it by replacing the connecting link in @gstayyaba/connecthem/db/index.js
-(const uri = "mongodb+srv://dbuser:OWMgBSSbIihYbbPX@cluster0.m01fkuo.mongodb.net/?retryWrites=true&w=majority";). 
+(const uri = "mongodb+srv://dbuser:OWMgBSSbIihYbbPX@cluster0.m01fkuo.mongodb.net/?retryWrites=true&w=majority";).  
+
 Add your username and password where the link says.
 
