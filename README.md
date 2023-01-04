@@ -30,7 +30,7 @@ Do make account on cloudinary and attach relevant data in app.js.
   api_secret: "mvZ1TW70xrw4CGLSLmXGT0ckIXU"
 });`  
 
-There is nodemailer that will send emails to students. Do add email id and app password (not gmail password) in mailer.js.
+There is nodemailer that will send emails to students. Do add email id and app password (not gmail password) in mailer.js.  
 `const mailer = nm.createTransport({
     host: 'smtp.gmail.com',
     port: 465,
