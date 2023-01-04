@@ -1,0 +1,37 @@
+aside.form
+  .modal#formNeedy
+    .modal-close
+    .modal-background
+    .modal-content
+      form(name="formNeedy",style='background-color: white; padding: 2em; border-radius: 16px')
+        h1.h1.title Please fill out the form and we will reach you soon.
+        small.text-primary Mandatory fields are marked with 
+          span.text-lg(style="vertical-align:text-top;") *
+        main.form-needy(style="display: grid; grid-template-columns: 1fr 1fr; gap: 1em;")
+          .field
+            input.input(type="text",placeholder="Name",title="Enter your full name.",name="name")
+          .field
+            input.input.form-field-required(type="tel",placeholder="National ID Card Number",title="Enter your ID card number. It is of form 35202-0000000-0",pattern="\\d{5}\-?\\d{7}\-?\\d",name="id",required)
+          .field
+            input.input.form-field-required(type="tel",placeholder="Phone",title="Enter your phone number. It is of form 03xx xxxxxxx",pattern="03\\d\\d ?\\d{7}",name="phone",required)
+          .field
+            input.input(type="email",placeholder="Email",title="Enter your email.",name="email")
+          .field
+            label.label Please Select a University. If your university is not listed then keep it unselected and fill the Contact Us form to tell us about your university.
+            select.select(name="university")
+              option(value="null") Select a university
+              option(value="ITU") Information Technology University
+              option(value="UET") University of Engineering Technology
+          .field
+            label.label Please upload a .jpg of your University Admission Slip or University Card
+            input.input.form-field-required(type="file",name="file-university-card",required)
+          .field
+            label.label Please upload a .jpg of your College character certificate or College Result Card.
+            input.input.form-field-required(type="file",name="file-result-card",required)
+          .field
+            label.label Please upload a .jpg of your passport size photo.
+            input.input.form-field-required(type="file",name="file-portrait",required)
+          .field
+            label.label Please upload a .jpg of your Electricity Bill.
+            input.input.form-field-required(type="file",name="file-bill",required)
+          button.button.is-primary(type="submit") Submit

@@ -1,0 +1,14 @@
+extends layout
+block content
+  .hero.is-link.is-medium
+    .hero-body.has-text-centered
+      h1.title.is-1 Details
+  .container.box.p-5(style="margin-top: -5em !important; max-width: 720px; margin: auto; border-radius: 1.2em")
+    div(style='display: grid; grid-template-columns: 1fr 1fr')
+      each value, key in attrs
+        if key.startsWith('img')
+          img(src=value, alt="key")
+        else if(!['password', '_id', '__v', 'progress',].includes(key))
+          div(style="display: flex; gap: 1em")
+            label.label= key.toUpperCase()
+            p= value

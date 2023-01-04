@@ -1,0 +1,236 @@
+extends layout
+block content
+  style.
+    .skills{display: flex; flex-wrap: wrap;}
+    label{margin-right: 0.5em;}
+  .container.mt-6
+    if status == 2
+      h1.title.is-2 Sorry to say but your profile has been blocked.
+      h2.title.is-3: a(href="/contact") Contact Support
+    else
+      .columns.p-6
+        .column
+          p.is-hidden.comapny_name=name
+          h1.title.is-4 #{name} - Company Profile #[a.icon(onclick="document.getElementById('edit').classList.toggle('is-active')"): img(src='https://cdn-icons-png.flaticon.com/512/6065/6065488.png')]
+          .icon-text.block
+            span.icon: img(src='https://icons-for-free.com/iconfiles/png/512/envelope-131965017430203317.png')
+            span= email
+          .icon-text.block
+            span.icon: img(src='https://static.thenounproject.com/png/52971-200.png')
+            span= phone
+          .icon-text.block
+            span.icon: img(src='https://cdn-icons-png.flaticon.com/512/684/684833.png')
+            span= cnic
+          //- a.button.is-link(onclick="window.location=('/company/students?page=0')") Students
+          button.update-profile.button.is-link.mr-2(style='background-color: #404bad') Post a job
+          //- changed from /admin/students to company/students
+          a.button.is-link.mr-2(href="/company/students",target="_blank", style='background-color: #404bad') Students
+          //- students who applied for the company
+          a.button.is-link(href="/company/candidates",target="_blank", style='background-color: #404bad') Applicants
+          .modal#edit
+            .modal-background(onclick="this.parentElement.classList.remove('is-active')")
+            .modal-content(style="background: white; margin-top: 70px")
+              form(method="post" name="postJob" action="/company/post-job")
+                .control
+                  label.label Job title
+                  input.input.job_title(name="job_title" type="text" required)
+                //- .control
+                //-   label.label Phone
+                //-   input.input(name="phone" type="tel" pattern="\\d{11}" value=phone requires)
+                //- .control
+                //-   label.label Email
+                //-   input.input(name="email" type="email" value=email required)
+                  //- this input field added to add or remove required skill in company profile
+                #newtask.is-4.mt-2
+                  input(type='text', placeholder='Skills..')
+                  button#push Add
+                //- skill listed here including the previous ones
+                #tasks.is-2.pt-3.mt-3(style ="display: flex; flex-wrap: wrap;")
+                  //- each skill in skills
+                  //-   .task(style="margin-inline-end: 8px;")
+                  //-     input.input(name="skills" type="text" value=skill required style=`width: ${skill.length + 3}ch; border:none`)
+                  //-     button.delete
+                  //-       i.far.fa-trash-alt
+                .control
+                  label.label Description
+                  textarea.input.description(cols="30", rows="10",name="description")
+                //- .control
+                //-   label.label Password
+                //-   input.input(name="password" type="password" )/
+                //- .control
+                //-   label.label Change Password
+                //-     input.checkbox.is-pulled-left.mr-1.mt-3(type="checkbox" name="changepassword" onchange="let e = document.querySelector('#newpass'); e.classList.toggle('is-hidden'); e.querySelector('input').toggleAttribute('disabled')")
+                //- .control.is-hidden#newpass
+                //-   label.label New Password
+                //-   input.input(type="password" name="newpassword" disabled required)
+                button.button.is-link.mt-2(type="submit", style='background-color: #404bad') Save
+
+
+          form(method='post' name='skillsform')
+            h3.title.is-4.mt-4 Salary Range
+            .select
+              select(id="salary")
+                option(value="15-20" selected=salary=="15-20") Rs. 15,000 - 20,000
+                option(value="20-25" selected=salary=="20-25") Rs. 20,000 - 25,000
+                option(value="25-30" selected=salary=="25-30") Rs. 25,000 - 30,000
+                option(value="30-35" selected=salary=="30-35") Rs. 35,000 - 40,000
+            h3.title.is-4.mt-4 Jobs
+            //- showing all required skills from one array.
+            //- .tabs.is-justify-content-flex-start
+            each inp in internsJobs
+              div.box.is-flex.is-justify-content-space-between.is-align-content-center(style="padding-block:1rem;padding-inline:1rem; margin-bottom:16px;width:650px; margin-inline:0;box-shadow: 0 0 5px 1px rgb(0 0 0 / 8%);")
+                .job-details
+                  p
+                    strong Job title: 
+                    span=inp.job_title
+                  p
+                    strong Skill: 
+                    span=inp.skills
+                  p
+                    strong Description: 
+                    span=inp.description
+                div.delete-job(data-id = inp._id)
+                  i.delete
+              //- ul
+                //- each skillset in Object.keys(allskills)
+                  li.js-toggle(data-toggle='#'+skillset.toLowerCase().replace(/[\s|\W]/, '-')): a= skillset
+            //- each value, skillset in allskills
+              .skills.is-hidden(id=skillset.toLowerCase().replace(/[\s|\W]/, '-'))
+                each inp in value
+                  label.checkbox.
+                    #[input(type='checkbox' value=inp.replace(/[\s|\W]/, '-') checked=skills.includes(inp))]
+                    #[span= inp]
+            //- button.button.is-link.mt-3(type='submit') Submit
+            
+        figure.column
+          img(src='https://www.pngitem.com/pimgs/m/30-307416_profile-icon-png-image-free-download-searchpng-employee.png', style="border-radius: 50%; width: 400px; height: 400px; object-fit: cover")
+
+  script.
+    let arr = []
+    //- pushing newskill from input box
+    document.querySelector('#push').onclick = function(e){
+      e.preventDefault()
+      if(document.querySelector('#newtask input').value.length == 0){
+      alert("Please Enter a Task")
+      }
+      else{
+        //- new skill html element added and being appended to dom
+        arr.push(document.querySelector('#newtask input').value)
+        document.querySelector('#tasks').innerHTML += `
+        <div class="task" style="margin-inline-end: 8px;">
+        <input name="skills" class="input job_skill " value = '${document.querySelector('#newtask input').value}' style="width: ${document.querySelector('#newtask input').value.length + 3}ch; border:none">
+        <div class="delete delete-skills">
+        <i class="far fa-trash-alt"></i>
+        </div>
+        </div>
+        `;
+        document.querySelector('#newtask input').value = ""    
+      }
+    //- removing skills from dom so when updating they won't be included inside the list
+      var current_tasks = document.querySelectorAll(".delete-skills");
+      //- console.log(current_tasks)
+      for(var i=0; i<current_tasks.length; i++){
+        current_tasks[i].onclick = function(e){
+          e.preventDefault()
+          this.parentNode.remove();
+          
+        }
+      }
+    }
+    var current_jobs = document.querySelectorAll(".delete-job");
+    for(var i=0; i<current_jobs.length; i++){
+      current_jobs[i].onclick = function(e){
+        e.preventDefault()
+        const job_id = e.target.parentElement.getAttribute('data-id')
+        //- this.parentNode.remove();
+        axios.post('/company/remove-job', {id: job_id, salary: document.skillsform.querySelector('select').value})
+        .then((data)=>{
+          if (data.status){
+            alert("Deleted")
+            this.parentNode.remove();
+          }
+          else throw Error('Failed')
+        }).catch((e)=>{
+          alert(e)
+        })
+      }
+    }
+    //- opening edit profile modal 
+    document.querySelector(".update-profile").addEventListener("click",()=>{
+      document.querySelector("#edit").style.display = "block"
+    })
+    //- closing update profile modal whel=n clicked on backdrop
+    document.querySelector(".modal-background").addEventListener("click",()=>{
+      document.querySelector("#edit").style.display = "none"
+    })
+    document.querySelectorAll('.js-toggle').forEach(e=>e.addEventListener('click', ()=>{
+      let elem = document.querySelector(e.getAttribute('data-toggle'))
+      for (let c of elem.parentElement.children){
+        if (c.classList.contains('is-active')){
+          c.classList.remove('is-active')
+          c.classList.add('is-hidden')
+          break
+        }
+      }
+      elem.classList.remove('is-hidden')
+      elem.classList.add('is-active')
+      for (let c of e.parentElement.children){
+        if (c.classList.contains('is-active')){
+          c.classList.remove('is-active')
+          break
+        }
+      }
+      e.classList.add('is-active')
+    }))
+    let skills = Array.from(document.querySelectorAll('input:checked')).map(e=>e.value)
+    console.log(skills)
+    document.querySelectorAll('input[type=checkbox]').forEach(e=>{
+      e.addEventListener('click', ()=>{
+        if (skills.includes(e.value)){
+          skills = skills.filter(s=>s!=e.value)
+        } else {
+          skills.push(e.value)
+        }
+      })
+    })
+    document.postJob.onsubmit = (e)=>{
+      e.preventDefault()
+      const description = document.postJob.querySelector('.description').value
+      const job_title = document.postJob.querySelector('.job_title').value
+      const comapny_name = document.querySelector('.comapny_name').textContent
+      if(arr.length === 0 || !description){
+        alert("please enter all input")
+        return 
+      }
+      axios.post('/company/post-job', {job_title:job_title,skills: arr, description: description, company_name: comapny_name})
+      .then((data)=>{
+        if (data.status){
+          alert("saved")
+          document.postJob.querySelector('.description').value = ''
+          arr = []
+          var current_tasks = document.querySelectorAll(".delete-skills");
+          for(var i=0; i<current_tasks.length; i++){
+            current_tasks[i].parentNode.remove();
+          }
+          document.querySelector("#edit").style.display = "none"
+          location.reload();
+        }
+
+        else throw Error('Failed')
+      }).catch((e)=>{
+        alert(e)
+      })
+            //- window.history.go(-1)
+    }
+    document.skillsform.onsubmit = (e)=>{
+      e.preventDefault()
+      //- "clicked"
+      axios.post('/company/update', {skills, salary: document.skillsform.querySelector('select').value})
+      .then((data)=>{
+        if (data.status)
+          alert("saved")
+        else throw Error('Failed')
+      }).catch((e)=>{
+        alert(e)
+      })
+    }

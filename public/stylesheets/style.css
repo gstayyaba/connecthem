@@ -1,0 +1,348 @@
+body,
+button,
+input,
+select {
+  font-family: 'Poppins', 'Fredoka', 'Helvetica', sans-serif;
+}
+
+.btn {
+  background-color: #404bad;
+  /* Green */
+  border-radius: 0.5em;
+  color: #ffffff;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 20px;
+}
+.is-link{
+   background-color: #404bad !important;
+}
+.checkbox{
+  flex-wrap: wrap;
+}
+.student-profile-pdf .block{
+  margin-bottom: .8rem;
+}
+.checkbox input{
+  margin-inline-end: 5px;
+}
+
+.select2-container{
+  width: 256px !important;
+}
+
+/* style to zoom in images of student profile on hover for student admin */
+.student-admin-applicant img{
+  transition: 0.5s all ease-in-out;
+}
+
+.student-admin-applicant img:hover{
+  transform: scale(1.2);
+}
+
+/* IE10 support for progress color */
+progress.progress.is-info.is-small {
+  color: #404bad;
+}
+
+/* progress bar mozilla support */
+progress.progress.is-info.is-small::-moz-progress-bar {
+  background: #404bad;
+}
+
+/* progress bar chrome support */
+progress.progress.is-info.is-small::-webkit-progress-value {
+  background: #404bad;
+}
+
+/* style skill add input  */
+#newtask input {
+  padding-block: 6px;
+  border-radius: 3px;
+  border: 1px solid #404bad;
+}
+
+#newtask input:focus-visible {
+  outline: #404bad;
+}
+
+#newtask button {
+  background-color: #404bad;
+  color: white;
+  box-shadow: none;
+  border: none;
+  padding: 6px 14px;
+  font-weight: 700;
+  margin-inline-start: 10px;
+  border-radius: 3px;
+}
+
+/* style skill add input  */
+
+.centered-box {
+  max-width: 590px;
+  margin: auto;
+  border-radius: 1em;
+  padding: 4em 2.5em;
+  background: white;
+}
+
+.navbar {
+  display: flex
+}
+
+.navbar-burger {
+  padding-top: 15px
+}
+
+.modal-content {
+  border-radius: 1em;
+  padding: 2em 2.5em
+}
+
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 1111;
+  color: black;
+}
+
+header.scrolled {
+  background: white;
+}
+
+header .navbar .navbar-item .navbar-dropdown {
+  background: white !important;
+  color: black !important;
+}
+
+header .navbar .navbar-item .navbar-dropdown a {
+  color: black !important;
+}
+
+header * {
+  background: transparent !important;
+  color: white !important;
+}
+
+header.scrolled * {
+  background: white !important;
+  color: black !important;
+}
+
+/* student profile menu style */
+.studentp-bg .tabs {
+  border: 1px solid #dbdbdb;
+}
+
+/* student profile active menu style */
+.studentp-bg .tabs.is-toggle li.is-active a {
+  background-color: #404bad;
+  color: #ffffff;
+  border-radius: 0;
+}
+
+/* student profile menu link style */
+.studentp-bg .tabs.is-toggle li a {
+  color: #000;
+  background-color: #fff;
+  border-radius: 0;
+  font-weight: 500;
+}
+
+/* student profile menu style */
+/* student profile fields style */
+.studentp-bg .content-a,
+.content-p,
+.content-c,
+.content-e,
+.content-o,
+.content-f {
+  background-color: #fff;
+  border-radius: 30px;
+  padding-block: 30px;
+  margin-block-end: 30px;
+  padding-inline-start: 17px;
+  padding-inline-end: 50px;
+}
+
+/* removed input field backgorund and reduced the size */
+.studentp-bg .field input,.studentp-bg .field select {
+  background-color: transparent;
+  max-width: 360px;
+}
+
+/* student profile intern, grant button style */
+.studentp-bg .studentp-content-container .button {
+  background-color: #404bad;
+  border-radius: 15px;
+  padding-block: 1rem;
+  padding-inline: 1.5rem;
+}
+
+/* student profile submit button style */
+#btnsubmit{
+  padding-inline: 8rem;
+  background-color: #404bad;
+}
+
+/* company skill submit button style */
+
+#submit{
+  background-color: #404bad;
+  padding-block: 10px;
+  padding-inline: 3rem;
+  font-size: 16px;
+  color: white;
+  box-shadow: none;
+  border: none;
+  font-weight: 700;
+  margin-inline-start: 10px;
+  border-radius: 3px;
+}
+
+.student-bg {
+  background: linear-gradient(to left, rgba(0,0,0,0.3), rgba(0,0,0,0.3)),url('../images/student_background.jpg');
+  background-size: cover;
+  min-height: 100vh;
+  padding: 2em;
+  padding-top: 6em;
+}
+
+.studentp-bg {
+  background: linear-gradient(to left, rgba(0,0,0,0.1), rgba(0,0,0,0.1)),url('../images/student_profile.png');
+  background-size: cover;
+  min-height: 100vh;
+  padding: 2em;
+  padding-top: 6em;
+}
+
+.ngo-bg {
+  background: linear-gradient(to left, rgba(0,0,0,0.3), rgba(0,0,0,0.3)),url('../images/ngo_background.png');
+  background-size: cover;
+  min-height: 100vh;
+  padding: 2em;
+  padding-top: 6em;
+}
+
+.admin-bg {
+  background: linear-gradient(to left, rgba(0,0,0,0.3), rgba(0,0,0,0.3)),url('../images/admin_background.png');
+  background-size: cover;
+  min-height: 100vh;
+  padding: 2em;
+  padding-top: 6em;
+}
+
+.boss-bg {
+  background: linear-gradient(to left, rgba(0,0,0,0.2), rgba(0,0,0,0.2)),url('../images/boss_background.jpg');
+  background-size: cover;
+  min-height: 100vh;
+  padding: 2em;
+  padding-top: 6em;
+}
+
+.companysignup-bg {
+  background: linear-gradient(to left, rgba(0,0,0,0.3), rgba(0,0,0,0.3)),url('../images/company_signup.png');
+  background-size: cover;
+  min-height: 100vh;
+  padding: 2em;
+  padding-top: 6em;
+}
+
+.companylogin-bg {
+  background: linear-gradient(to left, rgba(0,0,0,0.3), rgba(0,0,0,0.3)),url('../images/company_login.png');
+  background-size: cover;
+  min-height: 100vh;
+  padding: 2em;
+  padding-top: 6em;
+}
+/* boss container design */
+.boss-bg .container{
+  margin-left: 8rem;
+}
+
+/* button orientation fixed for /boss page */
+.boss-bg .buttons {
+  display: block;
+  width: fit-content;
+}
+
+.boss-bg .buttons .button {
+  display: block;
+  width: 200px;
+}
+
+.button {
+  font-weight: bold;
+  padding-top: 10px;
+}
+/* button orientation fixed for /boss page */
+
+form {
+  position: relative;
+}
+
+.box {
+  max-width: 960px;
+  border-radius: 1em;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 3em 4em;
+  background: white;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
+  flex: 1;
+}
+
+@media (min-width: 481px) {
+  .box:not(:last-child) {
+    margin-right: 2em;
+    margin-bottom: 0;
+  }
+}
+
+.messages {
+  max-width: 300px;
+  position: absolute;
+  right: 1em;
+  top: 5em;
+  z-index: 1111;
+}
+
+.container {
+  position: static;
+}
+
+@media (max-width: 480px) {
+  .is-flex {
+    display: block !important;
+  }
+
+  .messages {
+    top: initial;
+    bottom: 0;
+  }
+
+  .navbar-menu {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: black !important;
+    z-index: 111;
+  }
+
+  header {
+    width: 100vw;
+  }
+
+  main,
+  footer,
+  header {
+    padding: 1em
+  }
+
+}

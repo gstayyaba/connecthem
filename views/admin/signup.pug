@@ -1,0 +1,49 @@
+html
+  head
+    title= Signup
+    link(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.3/css/bulma.min.css')
+    link(rel='stylesheet', href='/stylesheets/style.css')
+    meta(name="viewport" content="width=device-width, initial-scale=1")
+  body
+    .admin-bg
+      .centered-box
+        if msg
+          .message.is-danger
+            .message-header Hmm, Things Didn't go as Planned
+            .message-body= msg
+        h1.title Sign Up to Become an Admin
+        form#login(name="signup" action='/admin/signup', method='POST')
+          .field
+            label.label(for='name',required) Name
+            input.input(type='text',required, name='name')          
+          .field
+            label.label(for='email',required) Email
+            input.input(type='email',required, name='email')
+          .field
+            label.label(for='phone',required) Phone
+            input.input(type='tel',required, name='phone')
+          .field
+            label.label(for='cnic',required) CNIC
+            input.input(type='tel', pattern='\\d{5}-\\d{7}-\\d',required, name='cnic')
+          .field
+            label.label(for='password',required) Password
+            input.input(type='password' value="1234",required, name='password')
+          .field.mt-5     
+            button.button.is-danger(type='submit', style='width:100%; background-color: #404bad') Signup
+  script(src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.24.0/axios.min.js")
+  script(src="/javascripts/application.js")
+  script.
+    document.signup.onsubmit = (e)=>{
+      e.preventDefault()
+      submitForm('/admin/signup', document.signup, document.getElementById('btnsubmit'), (suc, reason)=>{
+        console.log(suc, reason)
+        if (suc){
+          window.history.back()
+        } else {
+          alert(reason)
+          if (reason =='dup')
+            alert("CNIC Exists. Please Login")
+        }
+      })
+      return false;
+    }

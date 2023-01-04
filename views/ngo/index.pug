@@ -1,0 +1,18 @@
+extends layout
+block content
+  .container
+    .columns.p-6
+      .column
+        h1.title.is-4 #{name} - NGO Profile
+        .icon-text.block
+          span.icon: img(src='https://icons-for-free.com/iconfiles/png/512/envelope-131965017430203317.png')
+          span= email
+        .icon-text.block
+          span.icon: img(src='https://static.thenounproject.com/png/52971-200.png')
+          span= phone
+        .icon-text.block
+          span.icon: img(src='https://cdn-icons-png.flaticon.com/512/684/684833.png')
+          span= cnic
+      figure.column
+        img(src='https://www.pngitem.com/pimgs/m/30-307416_profile-icon-png-image-free-download-searchpng-employee.png', style="border-radius: 50%; width: 400px; height: 400px; object-fit: cover")
+

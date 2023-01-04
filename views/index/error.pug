@@ -1,0 +1,7 @@
+extends layout
+
+block content
+  div(style="text-align: center").mt-6.pt-6
+    h1.title.is-1= message
+    h2= error.status
+    pre #{error.stack}

@@ -1,0 +1,25 @@
+doctype html
+html
+  head
+    title= title
+    link(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.3/css/bulma.min.css')
+    link(rel='stylesheet', href='/stylesheets/style.css', type="text/css")
+    link(href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&display=swap", rel="stylesheet")
+    link(href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap", rel="stylesheet")
+    link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css')
+    meta(name="viewport" content="width=device-width, initial-scale=1")
+    
+  body(class=bodyClass)
+    .boss-bg
+      .container.pt-6
+        .buttons
+          a.button.is-link(href="/boss/company", style="background-color:#404bad") Add Company
+          a.button.is-link(href="/boss/admin", style="background-color:#404bad") Add Admin
+          a.button.is-link(href="/boss/ngo", style="background-color:#404bad") Add Ngo
+        .buttons
+          a.button.is-link(href="/boss/list/students", style="background-color:#404bad") All Students
+          a.button.is-link(href="/boss/list/companies", style="background-color:#404bad") All Companies
+          a.button.is-link(href="/boss/list/ngos", style="background-color:#404bad") All Ngos
+          a.button.is-link(href="/boss/list/admins", style="background-color:#404bad") All Admins
+      script(src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.24.0/axios.min.js")
+    

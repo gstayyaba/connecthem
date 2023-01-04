@@ -1,0 +1,65 @@
+html
+  head
+    title= Signup
+    link(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.3/css/bulma.min.css')
+    link(rel='stylesheet', href='/stylesheets/style.css')
+  body
+    .ngo-bg
+      .centered-box
+        if msg
+          .message.is-danger
+            .message-header Hmm, Things Didn't go as Planned
+            .message-body= msg
+        h1.title Please fill in the following credentials
+        form(action="/ngo/signup" name='signup',enctype='multipart/form-data' method="post")
+          .content-p
+            fieldset.block.px-5.bordered
+              legend.title.is-5(style="margin-left: -1.5em") Applicant
+              .field
+                label.label Name
+                input.input(type="text", placeholder="Name",title="Enter your full name.",name="applicant", required)
+              .field
+                label.label CNIC
+                input.input.form-field-required(type="tel",placeholder="National ID Card Number",title="Enter your ID card number. It is of form 35202-0000000-0",pattern="\\d{5}\-?\\d{7}\-?\\d",name="cnic", required)
+              .field
+                label.label Designation
+                input.input(required, type="text",placeholder="Your Designation" name="designation")
+            fieldset.block.px-5.bordered
+              legend.title.is-5(style="margin-left: -1.5em") Organization
+              .field
+                label.label Email
+                input.input.form-field-required(type="email",placeholder="admin@ngo.com" name="email")
+              .field
+                label.label Organization
+                input.input(required, type="text" placeholder="Organization's Name" name="name")
+              .field
+                label.label Contact
+                input.input.form-field-required(type="tel",placeholder="Organization's Contact no." name="phone")
+              .field
+                label.label Website
+                input.input(required, type="url",placeholder="https://ngo.com" name="website")
+              .field
+                label.label Facebook
+                input.input(required, type="url",placeholder="Facebook Page Link" name="facebook")
+            .field
+                label.label(for='pw') Password
+                input.input(type='password', name='password', required value="1234")
+            button#btnsubmit.mt-5.button.is-danger.is-fullwidth(type='submit', name='button') Submit
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.24.0/axios.min.js")
+    script(src="/javascripts/application.js")
+  
+    script.
+      document.signup.onsubmit = (e)=>{
+        e.preventDefault()
+        submitForm('/ngo/signup', document.signup, document.getElementById('btnsubmit'), (suc, reason)=>{
+          console.log(suc, reason)
+          if (suc){
+            window.history.back()
+          } else {
+            if (reason =='dup')
+              alert("CNIC Exists. Please Login")
+          }
+        })
+        return false;
+      }
+  

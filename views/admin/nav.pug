@@ -1,0 +1,15 @@
+header
+  nav.navbar(style="background: rgba(0,0,0,0.5)")
+    .navbar-burger#navbar-toggler(onclick="document.querySelector('.navbar-menu').classList.toggle('is-active')") &#9776;
+    .navbar-menu
+      ul.navbar-start
+        li.navbar-item
+          a(href=`/`) Home
+        li.navbar-item
+          a(href=`/admin/students?status=3`) Applications
+        li.navbar-item: a(href=`/admin/students?status=1`) Registered
+        li.navbar-item: a(href=`/admin/students?status=2`) Rejected
+      ul.navbar-center
+      ul.navbar-end
+        li.navbar-item
+          a(onclick='document.cookie="user=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/";window.location = "/"') Logout

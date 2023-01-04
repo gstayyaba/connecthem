@@ -1,0 +1,37 @@
+extends layout
+
+block content
+  .student-bg
+    .centered-box
+      if msg
+        .message.is-danger
+          .message-header Hmm, Things Didn't go as Planned
+          .message-body= msg
+      h1.title Login to your profile
+      form#login(name="login" action='/student/login', method='POST')
+        .field
+          label.label(for='cnic',required) CNIC
+          input.input(type='text',required, name='cnic', pattern='\\d{5}-\\d{7}-\\d')
+        .field
+          label.label(for='pw',required) Password
+          input.input(type='password',required, name='password')
+        .field.mt-5
+          button.button.is-danger(type='submit', style='width: 100%; background-color: #404bad') Login
+        p.has-text-centered.has-text-grey Not Signed Up Yet? #[a(href='/student/signup') Signup]
+
+  script.
+    document.login.onsubmit = (e)=>{
+      e.preventDefault()
+      submitForm('/student/login', document.login, document.getElementById('btnsubmit'), (suc, reason)=>{
+        console.log(suc, reason)
+        if (suc){
+          window.location = '/'
+        } else {
+          if (reason =='dup')
+            alert("CNIC Exists. Please Login")
+        }
+      })
+      return false;
+    }
+
+

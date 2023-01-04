@@ -1,0 +1,210 @@
+extends layout
+block content
+  .hero.is-link.is-medium
+    .hero-body.has-text-centered
+      h1.title.is-1 Application
+  .student-admin-applicant
+    .box(style="margin-top: -5em !important; max-width: 604px; margin: auto; border-radius: 1.2em; padding-inline: 0; padding-block-start: 0; padding-block-end:2rem; margin-block-end: 5rem")
+      .student-profile.p-5
+        .columns
+          .column
+            each value, key in attrs
+              unless ['password', '__v', 'progress', 'status', 'skills','internship','jobs', 'grant'].includes(key) || key.startsWith('img')
+                div.block
+                  if(key === "name")
+                    label.label= key.toUpperCase()
+                    p.is-rounded.is-bordered.profile_name#name= value
+                  else 
+                    label.label= key.toUpperCase()
+                    p.is-rounded.is-bordered= value
+            // showing internship and grant value with equavelent string for better understanding of user
+            //- .block 
+            //-   label.label INTERNSHIP 
+            //-   if(attrs.internship === 1)
+            //-     p.is-rounded.is-bordered Accepted
+            //-   if(attrs.internship === 2)
+            //-     p.is-rounded.is-bordered Rejected
+            //-   if(attrs.internship === 3)
+            //-     p.is-rounded.is-bordered Pending
+            .block 
+              label.label SKILLS 
+              ul
+              each val in attrs.skills
+                li=val
+            .block 
+              if(jobs && jobs.length > 0)
+                label.label MY JOBS
+                ul 
+                  each val in jobs
+                    li=val.job_title
+          .column
+            figure.block(style="text-align: center")
+              img.is-rounded.modal-trigger(src=attrs.imgpic, style='object-fit: cover; width:300px; height:300px; border-radius: 50%')
+            .images.block(style='display: flex; gap: 10px; flex-wrap: wrap')
+              each value, key in attrs
+                if key.startsWith('img') && key!='imgpic'
+                  figure.image.is-128x128(style='overflow: hidden')
+                    img.modal-trigger(src=value)
+            //Button to accept or reject students if only they are not accepted yet
+      .buttons.is-justify-content-flex-start.block.mr-5
+        //- Download as pdf button
+        button#pdf.button.is-success.ml-3(style='background-color: #404bad') Download as PDF
+        if(attrs.internship && attrs.internship > 1)
+          //- button#accept-intern.button.is-success Accept
+          //- button#modal-reject-intern-toggle.button.is-danger Reject
+  .student-admin-applicant(style="position:absolute; left: -100%;")
+    .box(style="margin-top: -5em !important; max-width: 604px; margin: auto; border-radius: 1.2em; padding-inline: 0; padding-block-start: 0; padding-block-end:2rem; margin-block-end: 5rem")
+      .student-profile-pdf.p-5.mb-8
+        .columns(style="min-height:900px")
+          .column
+            each value, key in attrs
+              unless ['password', '__v', 'progress', 'skills','email','internship', 'grant'].includes(key) || key.startsWith('img')
+                div.block
+                  //adding a class name to student name in order to name pdf file
+                  if(key === "name")
+                    label.label= key.toUpperCase()
+                    p.is-rounded.is-bordered.profile_name#name= value
+                  else 
+                    label.label= key.toUpperCase()
+                    p.is-rounded.is-bordered= value
+            .block
+              label.label EMAIL
+              p#email= attrs.email
+            .block 
+              label.label SKILLS 
+              span=attrs.skills.join(",")
+            .block 
+              if(jobs && jobs.length > 0)
+                p.label APPLIED SKILLS 
+                if(jobs.length > 1)
+                  each val in jobs
+                    span=val.job_title+ ','
+                else  
+                  each val in jobs
+                      span=val.job_title 
+          .column 
+            figure.block(style="text-align: center")
+              img.is-rounded.modal-trigger(src=attrs.imgpic, style='object-fit: cover; width:300px; height:300px; border-radius: 50%')
+        .block(style="min-height:900px")
+          label.label(style='font-size:1.3rem; margin-bottom:8px') CNIC/B-form
+          figure.image.is-16by9(style='overflow: hidden; margin-bottom:16px;padding-inline:5px')
+            img.modal-trigger(src=attrs.imgcnic)
+          label.label(style='font-size:1.3rem; margin-bottom:8px') UNIVERSITY CARD/ADMISSION SLIP
+          figure.image.is-16by9(style='overflow: hidden; margin-bottom:16px;padding-inline:5px')
+            img.modal-trigger(src=attrs.imguni)
+        .block(style="min-height:900px")
+          label.label(style='font-size:1.3rem; margin-bottom:8px') INTER RESULT CARD
+          figure.image.is-full(style='overflow: hidden; margin-bottom:16px;padding-inline:5px')
+            img.modal-trigger(src=attrs.imgres)
+        .block(style="min-height:900px")
+          label.label(style='font-size:1.3rem; margin-bottom:8px') ELECRTRICITY BILL
+          figure.image.is-full(style='overflow: hidden; margin-bottom:16px;padding-inline:5px')
+            img.modal-trigger(src=attrs.imgbill)
+        .block(style="min-height:900px")
+          label.label(style='font-size:1.3rem; margin-bottom:8px') TRANSCRIPT
+          figure.image.is-full(style='overflow: hidden; margin-bottom:16px;padding-inline:5px')
+            img.modal-trigger(src=attrs.imgtranscript)
+        .block
+          label.label(style='font-size:1.3rem; margin-bottom:8px') RESUME
+          figure.image.is-full(style='overflow: hidden; margin-bottom:16px;padding-inline:5px')
+            img.modal-trigger(src=attrs.imgcv)
+  .modal#modal
+    .modal-background
+    figure.modal-content.image
+      img#modal-image(src='')
+
+  .modal#modal-reject
+    .modal-background
+    figure.modal-content
+      form
+        textarea.input#msg(name='msg'  required placeholder='reasons...')
+        button.button.is-danger(type=submit)#reject-intern Reject
+
+  .modal#modal-reject
+    .modal-background
+    figure.modal-content
+      form
+        textarea.input#msg(name='msg'  required placeholder='reasons...')
+        button.button.is-danger(type=submit)#reject-grant Reject
+
+block scripts
+  script.
+    let data = JSON.parse(`!{JSON.stringify(jobs)}`)
+    console.log(data)
+    window.jsPDF = window.jspdf.jsPDF;
+    Array.of(...document.getElementsByClassName('modal-trigger')).forEach((e)=>{
+      e.onmouseover = ()=>{
+        document.getElementById('modal-image').src = e.src
+        document.getElementById('modal').classList.toggle('is-active')
+      }
+    })
+    Array.of(...document.getElementsByClassName('modal-background')).forEach((e)=>{
+      e.onclick = (e)=>{
+        e.target.parentElement.classList.remove('is-active')
+      }
+    })
+    document.getElementById('pdf').onclick = (e)=>{
+      e.preventDefault()
+      //- declaring new jsPDF object with page oprtions (orientation, unit, format)
+      const pdf = new jsPDF('p', 'pt', 'a4');
+      //- getting the html element which will convert to pdf
+      const element = document.querySelector(".student-profile-pdf")
+      //- replaced space between the student name with dash and turd=ned iro lowercase in order to properly name the pdf file
+      const profile_name = document.querySelector(".profile_name").innerText.replace(/\s+/g, '-').toLowerCase()
+      pdf.html(element,{
+        callback: function (doc) {
+          //-saving the pdf file with profile name
+          doc.save(`${profile_name}.pdf`);
+        },
+        autoPaging: 'text',
+        margin: [12, 8, 15, 8],
+        html2canvas: {
+            scale: 0.9
+        }
+      });
+    }
+    /** 
+      checking if accept intern button exist
+      onclick on accept intern
+    */
+    if(document.getElementById('accept-intern') !== null){
+    document.getElementById('accept-intern').addEventListener('click', (e)=>{
+      //- request company route to update student inernship
+      axios.post('/company/accept-intern', 
+          {id: window.location.href.substring(window.location.href.lastIndexOf('/') + 1)}
+      ).then(()=>{
+        alert("Accepted")
+        window.history.go(-1)
+      }).catch(()=>{
+        alert("error occured")
+        e.target.disabled = false;
+        e.target.classList.remove('is-loading')
+      })
+      e.target.disabled = true;
+      e.target.classList.add('is-loading')
+    })}
+    /** 
+    modal will open when clicked on reject button so that company cany record the reason for rejecting
+    */
+    if(document.getElementById('modal-reject-intern-toggle') !== null){
+      document.getElementById('modal-reject-intern-toggle').onclick = ()=>
+        document.getElementById('modal-reject').classList.add('is-active')
+    }
+    //- button for rejecting the student
+    if(document.getElementById('reject-intern') !== null){
+    document.getElementById('reject-intern').onclick = (e)=>{      
+      axios.post('/company/reject-intern', {
+        id: window.location.href.substring(window.location.href.lastIndexOf('/') + 1),
+        msg: document.getElementById('msg').value
+      }).then(()=>{
+        alert("Rejected")
+        window.history.go(-1)
+      }).catch(()=>{
+        alert("error occured")
+        e.target.disabled = false;
+        e.target.classList.remove('is-loading')
+        document.getElementById('modal-reject').classList.remove('is-active')
+      })
+      e.target.disabled = true;
+      e.target.classList.add('is-loading')
+    }}

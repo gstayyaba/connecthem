@@ -1,0 +1,54 @@
+extends layout
+
+block content
+  .student-bg
+    .centered-box
+      if msg
+        .message.is-danger
+          .message-header Hmm, Things Didn't go as Planned
+          .message-body= msg
+      h1.title Please fill in the following credentials
+      form(name='signup',method='post',_style='display: grid;grid-template-columns:1fr 1fr; gap: 0.5em 1em')
+        .content-p
+          .field
+            label.label Name
+            input.input(type="text",placeholder="Name",title="Enter your full name.",name="name", required)
+          .field
+            label.label CNIC
+            input.input.form-field-required(type="tel",placeholder="National ID Card Number",title="Enter your ID card number. It is of form 35202-0000000-0",pattern="\\d{5}\-?\\d{7}\-?\\d",name="cnic", required)
+          .field
+            label.label Please Select a University.
+            .select.is-fullwidth
+              select.is-fullwidth(name="university")
+                option(value="ITU") Information Technology University
+                option(value="UET") University of Engineering Technology
+          .field
+              label.label(for='pw') Password
+              input.input.pw(type='password', name='password', required)
+          .field
+            label.label(for='rpw') Re-enter Password
+            input.input.rpw(type='password', name='rpw', required)
+          button#btnsubmit.mt-5.button.is-danger.is-fullwidth(type='submit', name='button') Submit
+          p.has-text-centered.has-text-grey Already Signed Up? #[a(href='/student/login') Login]
+
+  script.
+    document.signup.onsubmit = (e)=>{
+      e.preventDefault()
+      let pw = document.signup.querySelector('.pw').value
+      let rpw = document.signup.querySelector('.rpw').value
+      if(pw!==rpw){
+        alert("password dosn't match")
+      }else{
+        submitForm('/student/signup', document.signup, document.getElementById('btnsubmit'), (suc, reason)=>{
+          console.log(suc, reason)
+          if (suc){
+            window.location = '/'
+          } else {
+            if (reason =='dup')
+              alert("CNIC Exists. Please Login")
+          }
+        })
+      }
+        return false;
+    }
+

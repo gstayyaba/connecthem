@@ -1,0 +1,34 @@
+extends layout
+
+block content
+  .companylogin-bg
+    .centered-box
+      if msg
+        .message.is-danger
+          .message-header Hmm, Things Didn't go as Planned
+          .message-body= msg
+      h1.title Please fill in the following credentials
+      form(name='login' method="post")
+        .field
+          label.label Email
+          input.input(type="text", placeholder="Email",title="Enter your email.",name="email", required)
+        .field
+            label.label(for='pw') Password
+            input.input(type='password', name='password', required)
+        button#btnsubmit.mt-5.button.is-danger.is-fullwidth(type='submit', name='button', style='background-color: #404bad') Submit
+
+  script.
+    document.login.onsubmit = (e)=>{
+      e.preventDefault()
+      submitForm('/company/login'+window.location.search, document.login, document.getElementById('btnsubmit'), (suc, reason)=>{
+        console.log(suc, reason)
+        if (suc){
+          window.location = '/company/profile'
+        } else {
+          if (true)
+            alert("Some error occured. Please Try Again")
+        }
+      })
+      return false;
+    }
+

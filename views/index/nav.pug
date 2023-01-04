@@ -1,0 +1,32 @@
+header
+  .container
+    .navbar
+      .navbar-brand
+        a.navbar-item(href="/")
+          img(src="/images/logo.png", alt="Logo")
+      .navbar-burger#navbar-toggler(onclick="document.querySelector('.navbar-menu').classList.toggle('is-active')") &#9776;
+      .navbar-menu
+        ul.navbar-start#navbar-main
+          li.navbar-item
+            a(href="/") Home
+          if bodyClass == "homepage"
+            li.navbar-item
+              a(href="#about") About Us
+            li.navbar-item
+              a(href="#facts") Facts
+            li.navbar-item
+              a(href="#mission") Our Mission
+            li.navbar-item
+              a(href="#accomplishments") Accomplishments
+            li.navbar-item
+              a(href="#contact") Contact us
+        ul.navbar-end
+          if name && name.split
+            li.navbar-item: a(href='/student/profile')= name.split(' ').map(e=>e[0]).join('')
+            li.navbar-item: a(onclick='document.cookie="user=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/";window.location = "/"') Logout
+          else if u
+            li.navbar-item: a(href=u.href)= u.text
+            li.navbar-item: a(onclick='document.cookie="user=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/";window.location = "/"') Logout
+          else
+            li.navbar-item: a(href='/student/login') Login
+            li.navbar-item: a(href='/student/signup') Signup

@@ -1,0 +1,418 @@
+extends layout
+
+block content
+  main.studentp-bg
+    .container(style="padding: 6em 6rem 0 0; max-width: 800px; margin-left:70px")
+      .columns(style='align-items: center')
+        .column.is-one-third
+          div(style= "color: #000") Progress #[span= (progress/2047*100).toFixed(2)+'%']
+          progress.progress.is-info.is-small(value=progress, max="2047")
+        .column 
+            button#submit.mt-5.button.is-info(type='submit', style='float:right') Submit Profile
+      .columns
+        .column.is-one-thirds
+          #tabs.tabs.is-toggle
+            ul(style='flex-direction: column; align-items: normal')
+              li.a.is-active
+                a Home
+              li.p
+                a Personal
+              li.c
+                a Contact
+              li.e
+                a Educational
+              li.o
+                a Others
+    
+        .column.is-two-thirds
+          form(enctype='multipart/form-data',name='profile',method='post',style='min-height: 500px' action="/student/profile")
+            .content-a
+              .fields
+                .field
+                  label.label Name
+                  input.input(type="text",placeholder="Name",title="Enter your full name.",name="name", disabled, value=name)
+                .field
+                  label.label CNIC
+                  input.input.form-field-required(type="tel",placeholder="National ID Card Number",title="Enter your ID card number. It is of form 35202-0000000-0",pattern="\\d{5}\-?\\d{7}\-?\\d",name="cnic-", disabled, value=cnic)
+                  input(type="text" name="cnic",hidden , value=cnic)
+              if status == 1
+                .buttons.mt-3 
+                  .button.is-info#btn-grant(style='background-color: #404bad') Grant
+                  .button.is-info#btn-internship(style='background-color: #404bad') Internship
+            .content-p.is-hidden
+              .field
+                label.label City of Residence
+                .select
+                  select(name='city')
+                    each c in ['lahore', 'islamabad', 'karachi']
+                      if city == c
+                        option(value=c, selected)= c
+                      else
+                        option(value=c)= c
+              .field
+                label.label Please upload a .jpg of your passport size photo.
+                p.control.has-icons-right
+                  input.input.form-field-required(type="file",name="imgpic", )
+                  span.icon.is-right
+                    if (progress & code.imgpic) == code.imgpic
+                      img(src=imgpic)
+            .content-c.is-hidden
+              .field
+                label.label Phone
+                input.input.form-field-required(type="tel",placeholder="Phone",title="Enter your phone number. It is of form 03xx xxxxxxx",pattern="03\\d\\d ?\\d{7}",name="phone", value=phone)
+              .field
+                label.label Email
+                input.input(type="email",placeholder="Email",title="Enter your email.",name="email", value=email)
+            .content-e.is-hidden
+              .field
+                label.label Please Select a University.
+                .select
+                  select(name="university", disabled)
+                    each val, key in {"UET": `Engineering University`, "ITU": `Information Technology University`}
+                      if key == university
+                        option(value=key, selected)= val
+                      else
+                        option(value=key)= val
+              .field
+                label.label Please upload a .jpg of your University Admission Slip or University Card
+                p.control.has-icons-right
+                  input.input.form-field-required(type="file",name="imguni" )
+                  span.icon.is-right
+                    if (progress & code.imguni) == code.imguni
+                      img(src=imguni)
+              .field
+                label.label Please upload a .jpg of your College Result Card.
+                p.control.has-icons-right
+                  input.input.form-field-required(type="file",name="imgres" )
+                  span.icon.is-right
+                    if (progress & code.imgres) == code.imgres
+                      img(src=imgres)
+            .content-o.is-hidden
+              .field
+                label.label Please upload a .jpg of your Electricity Bill.
+                p.control.has-icons-right
+                  input.input.form-field-required(type="file",name="imgbill" )
+                  span.icon.is-right
+                    if (progress & code.imgbill) == code.imgbill
+                      img(src=imgbill)
+              .field
+                label.label Please upload a .jpg of your CNIC
+                p.control.has-icons-right
+                  input.input.form-field-required(type="file",name="imgcnic" )
+                  span.icon.is-right
+                    if (progress & code.imgcnic) == code.imgcnic
+                      img(src=imgcnic)
+            .content-f.is-hidden
+            button#btnsubmit.mt-5.button.is-info(type='submit', style='') Save information
+        .modal#modal-grant
+          .modal-background
+          .modal-content.has-background-white.p-5
+            if grant == undefined
+              h1.title Please Upload the following stuff.
+              form(action='/student/grant' method='post', enctype='multipart/form-data', name='grant')
+                .field
+                  label.label University Fee Slip
+                  input.input(type="file", name="imgfee",required)
+                .field
+                  input.inpur(type="hidden", name="sId", value= _id)
+                button.button.is-success(type="submit", style='background-color: #404bad') Submit
+            else
+              h1.title Your application for a grant is in progress.
+        .modal#modal-internship
+          .modal-background
+          .modal-content.has-background-white.p-5.is-rounded
+            h1.title Please Upload the following stuff.
+            .button-container.is-flex
+              p.button.mr-2.skill-button.internship-button.is-link Skill based
+              p.button.company-button.internship-button Company based
+            
+            form(action='/student/internship',method='post', enctype='multipart/form-data', name='internship')
+              .field
+                label.label Resume
+                input.input(type="file", name="imgcv",required)
+              .field
+                label.label Transcript
+                input.input(type="file", name="imgtranscript")
+              .field
+                input.input(type="hidden", name="sId", value= _id)
+              style.
+                label.label{margin-right: 1em}
+                label.label input{float: left; margin-right: 0.5em; margin-top: 0.3em}
+              //- showing all skills and input field to add skills and update skills
+              .field#skills
+                label.label Skills
+                #newtask.is-4.mt-2
+                  input(type='text', placeholder='Add SkillsF..')
+                  button#push Add
+                #tasks.is-2.pt-3.mt-3(style ="display: flex; flex-wrap: wrap;")
+                  if(skills.length > 0)
+                    each skill in skills
+                      .task(style="margin-inline-end: 8px;")
+                        input.input(type="text",name="skills", value=skill, style=`width: ${skill.length + 3}ch; border:none`)
+                        button.delete.skill-delete
+                          i.far.fa-trash-alt
+              //- showing all companiew who have added required skills
+              //- if internship == undefined
+              .field#company-based.is-hidden
+                .block.search-box.is-flex.is-justify-content-space-between
+                    select.job_suggestion(name="jobs")
+                      option(value='') All
+                      each company in companies 
+                        option(value=company._id)=company.name
+                    p.ml-2.button#search(style='background-color: #404bad; color: #ffffff;') search
+                if(jobList && jobList.length > 0) 
+                  .box.p-2(style="box-shadow: 0 0 3px rgb(0 0 0 / 60%)")
+                    #studentId.is-hidden=_id
+                    .job-list
+                      each job in jobList
+                        .job.p-4.mb-3(style="border: 1px solid #0000006b; border-radius: 15px;")
+                          .columns
+                            .column.is-four-fifths
+                                p
+                                  strong Company name: 
+                                  span=job.company_name
+                                p
+                                  strong Job description: 
+                                  span=job.description
+                                p
+                                  strong Required skills: 
+                                  span=job.skills.join(",")
+                            .column.is-one-fifths(style="display:flex; flex-wrap: wrap; align-content: center; justify-content: flex-end")
+                              if jobs && jobs.includes(job._id.toString()) 
+                                button.apply.px-3(disabled style="border: 1px solid #0000006b; border-radius: 15px;background:transparent;",data-job-id=job._id,data-company-id=job.company_id) Applied
+                              else 
+                                button.apply.px-3(style="border: 1px solid #0000006b; border-radius: 15px;background:transparent;cursor: pointer",data-job-id=job._id,data-company-id=job.company_id) Apply
+                else 
+                  p no job has been posted yet
+              button.button.is-success(type="submit", style='background-color: #404bad') Submit
+        .messages
+          if status == 2
+            .message.is-danger
+              .message-header.value
+                p Important!!! Application Rejected
+              .message-body
+                p= msg
+                p Don't worry. Just resave with correct Data.
+              .message-body
+                p If there seems to be a mistake on our end... #[a(href='/complaint') Contact Us]
+          if progress >= 2047 && status == 3
+            .message.is-alert
+              .message-header
+                p Hey There
+                button.delete(onclick="this.parentElement.parentElement.classList.add('is-hidden')")
+              .message-body
+                p Your application is being processed. Please be patient. You will get response through email
+          .message.is-success.is-hidden#modal-success
+            .message-header
+              p Success
+              button.delete(onclick="this.parentElement.parentElement.style.display='none'")
+            .message-body Operation was Successfull
+          .message.is-alert.is-hidden#modal-failure
+            .message-header
+              p Failure
+              button.delete(onclick="this.parentElement.parentElement.style.display='none'")
+            .message-body Operation Failed Please Try again. If the error persists, may be try again at a later time or contact the support.
+          .message.is-alert
+            .message-header
+              p Important
+              button.delete(onclick="this.parentElement.parentElement.style.display='none'")
+            .message-body You can save your progress at any time by clicking on Save Information button but compeleting the form is necessary. Once your progress reaches 100% kindly press on submit profile and you will have to wait for registration process to complete (usually takes about a few hours). You will get response through email. After which you will get Grant and Internship Buttons in Home Tab. 
+            
+  script.
+    $(document).ready(function() {
+        $('.job_suggestion').select2();
+        $('#search').click((e)=>{
+          e.preventDefault()
+          let company = $('.job_suggestion').val();
+          let jobs = document.querySelectorAll('[data-company-id]')
+          jobs.forEach(element=>{
+            let id = element.getAttribute('data-company-id')
+            if(id !== company){
+              $(element).closest('.job').hide()
+            }
+            if(id === company){
+              $(element).closest('.job').show()
+            }
+            if(company === ''){
+              $(element).closest('.job').show()
+            }
+          })
+        })
+    });
+    //- add or remove skills for students
+    if(document.querySelector('#push')){
+      document.querySelector('#push').onclick = function(e){
+        let arr = []
+        e.preventDefault()
+        if(document.querySelector('#newtask input').value.length == 0){
+          alert("Please Enter a Task")
+        }
+        else{
+          //- new skill html element added and being appended to dom
+          arr.push(document.querySelector('#newtask input').value)
+          document.querySelector('#tasks').innerHTML += `
+          <div class="task" style="margin-inline-end: 8px;">
+          <input name="skills" class="input" value = '${document.querySelector('#newtask input').value}' style="width: ${document.querySelector('#newtask input').value.length + 3}ch; border:none">
+          <button class="skill-delete delete">
+          <i class="far fa-trash-alt"></i>
+          </button>
+          </div>
+          `;
+          document.querySelector('#newtask input').value = ""  
+          var current_tasks = document.querySelectorAll(".delete");
+          for(var i=0; i<current_tasks.length; i++){
+          current_tasks[i].onclick = function(e){
+            console.log("clicked")
+            e.preventDefault()
+            this.parentNode.remove();
+            
+          }
+          }  
+        }
+      }
+      //- removing skills from dom so when updating they won't be included inside the list
+      let current_tasks = document.querySelectorAll(".delete");
+      for(var i=0; i<current_tasks.length; i++){
+        current_tasks[i].onclick = function(e){
+          e.preventDefault()
+          this.parentNode.remove();
+          
+        }
+      }
+    }
+    //- applying to specific company
+    let current_company = document.querySelectorAll(".apply");
+    for(var i=0; i<current_company.length; i++){
+      current_company[i].onclick = function(e){
+        e.preventDefault()
+        const resume = document.querySelector('[name=imgcv]').value
+        const transcript = document.querySelector('[name=imgtranscript]').value
+        if(!resume || !transcript){
+          alert("please enter your resume and transcript")
+          return 
+        }
+        companyId = this.getAttribute('data-company-id')
+        jobId = this.getAttribute('data-job-id')
+        studentId = document.getElementById("studentId").textContent
+        axios.post(`/student/jobUpdate/${jobId}`, {
+          sId: studentId,
+          companyId: companyId
+        }).then((data)=>{
+          if(data.status){
+            this.innerText = "Applied"
+          }else{
+            alert("Already applied")
+          }
+        }).catch(()=>{
+          alert("error occured")
+          e.target.disabled = false;
+          e.target.classList.remove('is-loading')
+          document.getElementById('modal-reject').classList.remove('is-active')
+        })
+      }
+    }
+    //- document.signup.onsubmit = (e)=>{
+    //-   e.preventDefault()
+    //-   submitForm('/student/profile', document.signup, document.getElementById('btnsubmit'), (e)=>{
+    //-     let elem = e?'modal-success': 'modal-failure'
+    //-     document
+    //-       .getElementById(elem)
+    //-       .classList.toggle('is-hidden')
+    //-       setTimeout(()=>{
+    //-         document.getElementById(elem).classList.add('is-hidden')
+    //-       }, 10000)
+    //-   })
+    //- }
+    document.querySelector("#submit").onclick = (e)=>{
+      e.preventDefault()
+       axios.post(`/student/sendForReview`).then((data)=>{
+          if(data.status){
+            alert("apllication sent for review")
+          }else{
+            alert("there was an issue, we are looking into this")
+          }
+        })
+    }
+    let t = document.getElementById('tabs'), c = Array.of(...document.querySelectorAll('div[class^=content-]'))
+    Array.of(...t.getElementsByTagName('a')).forEach(e=>{
+      e.onclick = (e)=>{
+        c.forEach(e=>e.classList.add('is-hidden'))
+        document.getElementsByClassName('content-'+e.target.parentElement.classList.item(0))[0].classList.remove('is-hidden')
+        t.getElementsByClassName('is-active')[0].classList.remove('is-active');
+        e.target.parentElement.classList.add('is-active')
+        return false
+      }
+    })
+
+    Array(...document.getElementsByClassName('modal-background')).forEach(e=>e.onclick = e=>e.target.parentElement.classList.remove('is-active'))
+    let grantBtn = document.querySelector('#btn-grant')
+    if(grantBtn){
+     document.querySelector('#btn-grant').onclick = (e)=>document.getElementById('modal-grant').classList.add('is-active')
+    }
+    if(grantBtn){
+      document.querySelector('#btn-internship').onclick = (e)=>{
+      console.log("clicked modal")
+      document.getElementById('modal-internship').classList.add('is-active')
+      }
+    }
+    let internshipButtons = document.querySelectorAll(".internship-button")
+    document.querySelector(".skill-button").addEventListener("click",(e)=>{
+      internshipButtons.forEach(item=>{
+        item.classList.remove('is-link')
+      })
+      e.target.classList.add('is-link')
+      if(!document.querySelector('#company-based').classList.contains('is-hidden')){
+        document.querySelector('#company-based').classList.add('is-hidden')
+      }
+      if(document.querySelector('#skills').classList.contains('is-hidden')){
+        document.querySelector('#skills').classList.remove('is-hidden')
+      }
+    })
+    document.querySelector(".company-button").addEventListener("click",(e)=>{
+      internshipButtons.forEach(item=>{
+        item.classList.remove('is-link')
+      })
+      e.target.classList.add('is-link')
+      if(document.querySelector('#company-based').classList.contains('is-hidden')){
+        document.querySelector('#company-based').classList.remove('is-hidden')
+      }
+      if(!document.querySelector('#skills').classList.contains('is-hidden')){
+        document.querySelector('#skills').classList.add('is-hidden')
+      }
+    })
+    document.internship.onsubmit= e=>{
+      //- e.preventDefault()
+      alert('Your internship application has been sent')
+      document.internship.submit
+    }
+    //- document.querySelector('.search_comapny').addEventListener('blur',(e)=>{
+    //-   console.log(e.target.value)
+    //- })
+    //- document.grant.onsubmit = (e)=>{
+    //-   e.preventDefault()
+    //-   submitForm('/student/grant', document.grant, document.grant.getElementsByTagName('button')[0], (e)=>{
+    //-     document.getElementById('modal-grant').classList.remove('is-active')
+    //-     let elem = e?'modal-success': 'modal-failure'
+    //-     document
+    //-       .getElementById(elem)
+    //-       .classList.toggle('is-hidden')
+    //-       setTimeout(()=>{
+    //-         document.getElementById(elem).classList.add('is-hidden')
+    //-       }, 10000)
+    //-   })
+    //-   return false
+    //- }
+    //- document.internship.onsubmit = (e)=>{
+    //-   e.preventDefault()
+    //-   submitForm('/student/internship', document.internship, document.internship.getElementsByTagName('button')[0], (e)=>{
+    //-     document.getElementById('modal-internship').classList.remove('is-active')
+    //-     let elem = e?'modal-success': 'modal-failure'
+    //-     document
+    //-       .getElementById(elem)
+    //-       .classList.toggle('is-hidden')
+    //-       setTimeout(()=>{
+    //-         document.getElementById(elem).classList.add('is-hidden')
+    //-       }, 10000)
+    //-   })
+    //-   return false
+    //- }

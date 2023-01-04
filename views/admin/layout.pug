@@ -1,0 +1,19 @@
+doctype html
+html
+  head
+    title Connecthem - Admin Profile
+    link(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.3/css/bulma.min.css')
+    link(rel='stylesheet', href='/stylesheets/style.css')
+    meta(name="viewport" content="width=device-width, initial-scale=1")
+    block links
+  body(class=bodyClass)
+    include nav.pug
+    block content
+    include footer.pug
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.24.0/axios.min.js")
+    //- to convert html div into pdf
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js")
+    //- dependecy for jspdf it converts html into a canvas
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js")
+    script(src="/javascripts/application.js")
+    block scripts

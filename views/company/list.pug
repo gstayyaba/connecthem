@@ -1,0 +1,118 @@
+extends layout
+
+block content 
+  //- parent container from design allignment of all content
+  //- console.log("student", students)
+  .student-list-container(style="max-width:1280px; margin:0 auto;")
+    #newtask.is-4.pt-6.mt-6
+        select.job_suggestion(name="jobs")
+          option(value="") 
+          each skill in allSkills  
+            option(value=skill)=skill
+        button#push Add
+    #tasks.is-2.pt-3.mt-3(style ="display: flex; flex-wrap: wrap;")
+    div.is-2.pt-3.mt-3
+      button#submit Search
+    
+    if students.length
+      table.table.mt-6.pt-6(style="width: 100%;")
+        thead
+          tr
+            th Name
+            th Email
+            th Phone
+            th University
+            th(style="display:none") Skills
+            th Transcript
+            th Resume
+      
+        tbody
+          each item in students
+            tr
+              td: a(href=`/company/students/${item._id}`)= item.name
+              td: a(href="mailto: "+item.email)= item.email
+              td= item.phone
+              td= item.university
+              td.skill(style="display:none")= item.skills
+              td: a(href=item.imgtranscript target="_blank") Transcript
+              td: a(href=item.imgcv target="_blank") Resume
+      nav.pagination.block
+        if page <= 0
+          a.pagination-previous.is-disabled Previous
+        else
+          a.pagination-previous(href=`/company/students?page=${parseInt(page)-1}`) Previous
+        a.pagination-next(href=`/company/students?page=${parseInt(page)+1}`) Next
+    else
+      h1.title.is-4.pt-6.mt-6(style="text-align: center; width: 75%; margin: auto;") Wow! There is literally no one to show!!! Please change your preferences a little.
+  script.
+    $(document).ready(function() {
+        $('.job_suggestion').select2();
+    });
+    let arr = []
+    document.querySelector('#push').onclick = function(){
+    if(document.querySelector('#newtask select').value.length == 0){
+    alert("Please Enter a Task")
+    }
+    else{
+    arr.push(document.querySelector('#newtask select').value)
+    document.querySelector('#tasks').innerHTML += `
+    <div class="task" style="margin-inline-end: 8px;">
+    <span id="taskname">
+    ${document.querySelector('#newtask select').value}
+    </span>
+    <button class="delete">
+    <i class="far fa-trash-alt"></i>
+    </button>
+    </div>
+    `;
+    document.querySelector('#newtask select').value = ""
+    var current_tasks = document.querySelectorAll(".delete");
+    for(var i=0; i<current_tasks.length; i++){
+    current_tasks[i].onclick = function(){
+    const taskName = this.previousSibling.previousSibling.innerText
+    arr = arr.filter(item=> item !== taskName.trim())
+    console.log(arr, taskName, arr.indexOf(taskName.trim()))
+    this.parentNode.remove();
+      
+    }
+    }
+    
+    }
+    }
+    //- filtering table data according to skill on submit
+    document.querySelector('#submit').onclick = function(e){
+      e.preventDefault()
+      console.log(arr)
+      if(arr.length === 0){
+        const tableRows = document.querySelectorAll('tr')
+        for(const key in tableRows){
+          if(tableRows[key]){
+            if(tableRows[key].style)
+            tableRows[key].style.display = ''
+          }
+        }
+      }else{
+        //- traversing through all table and checking which table row has td of skill that matches the skill that was submitted
+        const tableSkills = document.querySelectorAll('tr .skill')
+        for(const key in tableSkills){
+          arr.forEach(item=>{
+            if(!tableSkills[key].innerText){
+              if(tableSkills[key].parentElement.style)
+              tableSkills[key].parentElement.style.display = "none"
+            }
+            if(tableSkills[key].innerText){
+              if(!tableSkills[key].innerText.toLowerCase().includes(item.toLowerCase())){
+                if(tableSkills[key].parentElement.style)
+                tableSkills[key].parentElement.style.display = "none"
+              }
+              if(tableSkills[key].innerText.toLowerCase().includes(item.toLowerCase())){
+                if(tableSkills[key].parentElement.style)
+                tableSkills[key].parentElement.style.display = ""
+              }
+            }           
+          })
+        }
+      }
+    }
+  
+    

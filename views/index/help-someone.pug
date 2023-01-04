@@ -1,0 +1,40 @@
+aside.help-someone
+  .modal#formHelp
+    .modal-close
+    .modal-background
+    .modal-content
+      form.form-help(name="formHelp", style='background-color: white; padding: 2em; border-radius: 16px')
+        h1.h1.title Please tell us who you are?
+        small.text-primary All fields are mandatory
+        main
+          .field.form-help-input
+            label.label I am
+            select.select#helper-type(name="helperType")
+              option(value="ngo") A representative of an NGO
+              option(value="donator") A donator
+          .form-help-main
+            #form-help-donator(style="display: grid; grid-template-columns: 1fr 1fr; gap: 1em;")
+              .field
+                input.input(type="text",placeholder="Name",title="Enter your full name.",name="name")
+              .field
+                input.input.form-field-required(type="tel",placeholder="National ID Card Number",title="Enter your ID card number. It is of form 35202-0000000-0",pattern="\\d{5}\-?\\d{7}\-?\\d",name="card")
+              .field
+                input.input.form-field-required(type="tel",placeholder="Phone",title="Enter your phone number. It is of form 03xx xxxxxxx",pattern="03\\d\\d ?\\d{7}",name="phone")
+              .field
+                input.input(type="email",placeholder="Email",title="Enter your email.",name="email")
+            #form-help-ngo(style="display: grid; grid-template-columns: 1fr 1fr; gap: 1em;")
+              .field
+                input.input(type="text",placeholder="Name",title="Enter your full name.",name="name")
+              .field
+                input.input(type="text",placeholder="Designation",title="Enter your designation.",name="designation")
+              .field
+                input.input(type="text",placeholder="Organization",title="Enter Organization Name.",name="org")
+              .field
+                input.input(type="email",placeholder="Organization Email",title="Enter Organization email.",name="email")
+              .field
+                input.input(type="tel",placeholder="Organization Phone",title="Enter Organization Phone. It is of form 0xxx xxxxxxx",name="phone", pattern="()|((92)? ?0?3\\d\\d ?\\d{7})")
+              .field
+                input.input(type="text",placeholder="Organization Website",title="Enter Organization website.",name="url")
+              .field
+                input.input(type="text",placeholder="Organization Facebook",title="Enter Organization Facebook.",name="fb")
+        button.button.is-primary(type="submit") Submit
