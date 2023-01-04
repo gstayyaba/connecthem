@@ -3,7 +3,7 @@
 ### Disclaimer
 This project is done by Abdullah Qureshi, Muhammad Omer Irfan, Amna Irfan, and me under the supervision of Mr. Sarfraz Raza. This is an ITU project. If anyone want to contribute or continue working on this project He\She can but it needs to be free for use for anyone.
 
-#Overview
+## Overview
 This projects helps to connect students with NGOs and companies. 
 =>Company admin can make job posts and these will be visible to students. From Applicant button, company admin can see all student that have applied to the job. Company admin can also search based on job title. From student button, company can see all students profile who have mentioned their own skill. Comapny admin can search here also based on skills that students mentioned in their profile.
 
