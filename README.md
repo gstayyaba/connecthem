@@ -3,6 +3,8 @@
 ### Disclaimer
 This project is done by Abdullah Qureshi, Muhammad Omer Irfan, Amna Irfan, and me under the supervision of Mr. Sarfraz Raza. This is an ITU project. If anyone want to contribute or continue working on this project He\She can but it needs to be free for use for anyone.
 
+#Introduction
+This projects helps to connect students with NGOs and companies. Companies can make job posts and these will be visible to students. Students can make profile by adding relevant data and then this goes to Admin. Admin will review the profile of student and will accept or reject the student profile. 
 
 ### How to run
 
