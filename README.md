@@ -12,8 +12,9 @@ This projects helps to connect students with NGOs and companies.
 * Admin will review the profile of student and will accept or reject the student profile. For rejection admin have to give reason. 
 
 * Boss will register companies, admin profile and a token will be generated that will be allow company admin and Admins to login to their profile. 
-for example: https://connecthem.tayyabashoukat.repl.co/company/login?token=333948356 for company login
-             https://connecthem.tayyabashoukat.repl.co/admin/login?token=333948356   for admin login
+for example:  
+Company Login: https://connecthem.tayyabashoukat.repl.co/company/login?token=333948356  
+Admin Login: https://connecthem.tayyabashoukat.repl.co/admin/login?token=333948356  
 
 ### How to run
 
