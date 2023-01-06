@@ -1,7 +1,7 @@
 # connecthem
 
 ### Disclaimer
-This project is done by Abdullah Qureshi, Muhammad Omer Irfan, Amna Arif, and me under the supervision of Mr. Sarfraz Raza. This is an ITU project. If anyone want to contribute or continue working on this project He\She can but it needs to be free for use for anyone.
+This project is done by Muhammad Abdullah Qureshi, Muhammad Omer Irfan, Amna Arif, and me under the supervision of Mr. Sarfraz Raza. This is an ITU project. If anyone want to contribute or continue working on this project He\She can but it needs to be free for use for anyone.
 
 ## Overview
 This projects helps to connect students with NGOs and companies. 
