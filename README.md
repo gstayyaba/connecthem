@@ -16,6 +16,9 @@ for example:
 Company Login: https://connecthem.tayyabashoukat.repl.co/company/login?token=333948356  
 Admin Login: https://connecthem.tayyabashoukat.repl.co/admin/login?token=333948356  
 
+### Video Link
+https://drive.google.com/file/d/1_O3o6DhpeEnlB66XVZcm5rBnVXqmpUoN/view?usp=sharing
+
 ### How to run
 
 Do install Nodejs and npm 
